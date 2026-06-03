@@ -1,0 +1,23 @@
+class Solution {
+    map<int, int> mp;
+
+   public:
+    int numDecodings(string s) {
+        mp.clear();
+        return dp(s, 0);
+    }
+    int dp(string s, int idx) {
+        if (idx >= s.length()) return 1;
+        if (s[idx] == '0') return 0;
+        int s1 = 0, s2 = 0;
+        if (mp.find(idx) != mp.end()) return mp[idx];
+        s1 = dp(s, idx + 1);
+        if (idx != s.length() - 1) {
+            string temp = s.substr(idx, 2);
+            int x = stoi(temp);
+            if (x >= 10 && x <= 26) s2 = dp(s, idx + 2);
+        }
+        mp[idx] = s1 + s2;
+        return s1 + s2;
+    }
+};
